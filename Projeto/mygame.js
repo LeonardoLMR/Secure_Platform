@@ -148,7 +148,7 @@ function setMenu(){
 
 function startTiming(){
 	//aleatorio de 1 até 8
-	selectLevel = 1;// Math.floor( (Math.random() * 8 ) + 1);
+	selectLevel = Math.floor( (Math.random() * 8 ) + 1);
 	selectScene = se.mlevel.getScene(selectLevel);
 	console.log( selectScene);
 	//pegando todos os objetos
