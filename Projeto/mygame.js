@@ -130,13 +130,54 @@ function setMenu(){
 
 	var jogar = new Button("jogar", 0, 0, function(){
 		se.mlevel.loadScene(1);
+		se.mlevel.loadScene(2);
+		se.mlevel.loadScene(3);
+		se.mlevel.loadScene(4);
+		se.mlevel.loadScene(5);
+		se.mlevel.loadScene(6);
+		se.mlevel.loadScene(7);
+		se.mlevel.loadScene(8);
+		se.mlevel.loadScene(9);
+		se.mlevel.loadScenePersist(1);
+		
+		startTiming();
 	});
 	jogar.setPosition( canvas.width/2 - jogar.w/2, 550);
 
 }
 
+function startTiming(){
+	//aleatorio de 1 até 8
+	selectLevel = 1;// Math.floor( (Math.random() * 8 ) + 1);
+	selectScene = se.mlevel.getScene(selectLevel);
+	console.log( selectScene);
+	//pegando todos os objetos
+	objs = selectScene.getObjects();
+	console.log( objs);
+	selectObjs = objs.filter(obj => obj.classename == "map");
+	console.log( selectObjs);
+	selectObjRandom = Math.floor( (Math.random() * selectObjs.length ) );
+
+	console.log("Bug em - Cena " + selectLevel + " objeto "+ selectObjRandom );
+	console.log( selectObjs[ selectObjRandom]);
+	console.log( selectObjs[ selectObjRandom].animation[0].sprites[0].src );
+	
+	selectObjs[ selectObjRandom ].setAlpha(0);
+	setInterval( startTiming, 30*1000);
+}
+
+//Tem que ter isso para todos os levels (levelIsLoaded ...)
+entradaIsLoaded = false;
 //Objetos da entrada e suas posições
 function setEntrada(){
+	//Tem que ter isso para todos os levels
+	if( entradaIsLoaded ){
+		console.log("segunda");
+		return;
+	}else{
+		console.log("primeira")
+		entradaIsLoaded = true;
+	}
 
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
@@ -145,7 +186,7 @@ function setEntrada(){
 	entrada.setPosition(canvas.width/2 - entrada.w/2, 140);
 
 	//Titulo
-	var tEntrada = new GameObject("tentrada", 0, 0, "map", 141, 347);
+	var tEntrada = new GameObject("tentrada", 0, 0, "gui", 141, 347);
 	tEntrada.setPosition(canvas.width/2 - tEntrada.w/2 - 170, 450 - 173);
 
 	//movéis
@@ -206,7 +247,7 @@ function setQuarto2(){
 	mesaLateral2.setPosition(canvas.width/2 - mesaLateral2.w/2 + 198, 580);
 
 	var portaV = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(1);
+		se.mlevel.loadScenePersist(1);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 + 253, 260);
 
@@ -237,7 +278,7 @@ function setQuarto1(){
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 + 40, 143);
 
 	var portaV = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(1);
+		se.mlevel.loadScenePersist(1);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 + 227, 550);
 
@@ -286,7 +327,7 @@ function setSala(){
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 + 180, 758);
 
 	var portaA = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(1);
+		se.mlevel.loadScenePersist(1);
 	}, 258, 14);
 	portaA.setPosition(canvas.width/2 - portaA.w/2 - 301, 210);
 

@@ -176,9 +176,11 @@ Animation.prototype.autoSize = function(type){
  * @param {string} classname - Nome da classe do objeto (grupo)
  * @param {int} w - Largura do sprite
  * @param {int} h - Altura do sprite
+ * @param {int} z - Profundidade
+ * @param {int} a - Alfa
  * @constructor
  */
-function GameObject(animations, x, y, classename, w, h, r, z) {
+function GameObject(animations, x, y, classename, w, h, r, z, a) {
     //this.sprite = null;
 
     this.x = 0;
@@ -206,6 +208,10 @@ function GameObject(animations, x, y, classename, w, h, r, z) {
     this.r = 0;
     if(r != undefined)
         this.r = r;
+
+    this.a = 1;
+    if(a != undefined)
+        this.a = a;
 
 
     this.currentAnimation = 0;
@@ -260,7 +266,10 @@ GameObject.prototype.update = function() {
 GameObject.prototype.print = function() {
 
     if(this.animation != null) {
+        ctx.save();
+        ctx.globalAlpha = this.a;
         ctx.drawImage(this.animation[this.currentAnimation].getCurrentSprite(), this.x, this.y, this.w, this.h);
+        ctx.restore();
     }
 }
 
@@ -283,6 +292,30 @@ GameObject.prototype.setRotate = function (r) {
 GameObject.prototype.getRotate = function () {
     return this.r;
 }
+
+
+/**
+ * Define a rotação do objeto
+ * @param {int} r - rotação
+ */
+GameObject.prototype.setAlpha = function (a) {
+    if( a > 1)
+        a = 1;
+    else if( a < 0)
+        a = 0;
+
+    this.a = a;
+}
+
+
+/**
+ * Retorna a rotação do objeto
+ * @return {int} r - rotação
+ */
+GameObject.prototype.getAlpha = function () {
+    return this.a;
+}
+
 
 
 
@@ -2222,6 +2255,18 @@ ManagerScene.prototype.loadScene =function (index) {
     this.getCurrentScene().setObjects([]);
     this.getCurrentScene().startFunction();
 }
+
+
+/**
+ * Carrega um determinado level persistindo os objetos 
+ * @method
+ * @param {int} index
+ */
+ManagerScene.prototype.loadScenePersist =function (index) {
+    this.currentScene = index;
+    this.getCurrentScene().startFunction();
+}
+
 
 /**
  * Carrega o próximo level, seguindo a ordem do array de scenes
