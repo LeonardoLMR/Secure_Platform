@@ -182,7 +182,8 @@ function setEntrada(){
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
-	var entrada = new GameObject("entrada", 0, 0, "map", 184, 630);
+	//Parede
+	var entrada = new GameObject("entrada", 0, 0, "gui", 184, 630);
 	entrada.setPosition(canvas.width/2 - entrada.w/2, 140);
 
 	//Titulo
@@ -197,12 +198,12 @@ function setEntrada(){
 	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2, 160);
 
 	var portaV = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(3);
+		se.mlevel.loadScenePersist(3);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 - 90, 180);
 
 	var portaV = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(2);
+		se.mlevel.loadScenePersist(2);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 - 90, 450);
 
@@ -210,21 +211,31 @@ function setEntrada(){
 	portaH.setPosition(canvas.width/2 - portaH.w/2, 761);
 
 	var portaA = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(4);
+		se.mlevel.loadScenePersist(4);
 	}, 258, 14);
 	portaA.setPosition(canvas.width/2 - portaA.w/2 + 90, 210);
 }
 
+quarto2IsLoaded = false;
 function setQuarto2(){
+
+	if( quarto2IsLoaded ){
+		console.log("segunda");
+		return;
+	}else{
+		console.log("primeira")
+		quarto2IsLoaded = true;
+	}
 
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
-	var quarto2 = new GameObject("quarto2", 0, 0, "map", 510, 441);
+	//Parede
+	var quarto2 = new GameObject("quarto2", 0, 0, "gui", 510, 441);
 	quarto2.setPosition(canvas.width/2 - quarto2.w/2, 235);
 
 	//Titulo
-	var tQuarto2 = new GameObject("tquarto2", 0, 0, "map", 141, 370);
+	var tQuarto2 = new GameObject("tquarto2", 0, 0, "gui", 141, 370);
 	tQuarto2.setPosition(canvas.width/2 - tQuarto2.w/2 - 330, 450 - 185);
 
 	//movéis
@@ -255,16 +266,26 @@ function setQuarto2(){
 	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 - 200, 485);
 }
 
+quarto1IsLoaded = false;
 function setQuarto1(){
+
+	if( quarto1IsLoaded ){
+		console.log("segunda");
+		return;
+	}else{
+		console.log("primeira")
+		quarto1IsLoaded = true;
+	}
 
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
-	var quarto1 = new GameObject("quarto1", 0, 0, "map", 458, 610);
+	//Parede
+	var quarto1 = new GameObject("quarto1", 0, 0, "gui", 458, 610);
 	quarto1.setPosition(canvas.width/2 - quarto1.w/2, 150);
 
 	//Titulo
-	var tQuarto1 = new GameObject("tquarto1", 0, 0, "map", 141, 370);
+	var tQuarto1 = new GameObject("tquarto1", 0, 0, "gui", 141, 370);
 	tQuarto1.setPosition(canvas.width/2 - tQuarto1.w/2 - 300, 450 - 185);
 
 	//Movéis
@@ -304,16 +325,26 @@ function setQuarto1(){
 	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 + 170, 400);
 }
 
+salaIsLoaded = false;
 function setSala(){
+
+	if( salaIsLoaded ){
+		console.log("segunda");
+		return;
+	}else{
+		console.log("primeira")
+		salaIsLoaded = true;
+	}
 
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
-	var sala = new GameObject("sala", 0, 0, "map", 606, 629);
+	//Parede
+	var sala = new GameObject("sala", 0, 0, "gui", 606, 629);
 	sala.setPosition(canvas.width/2 - sala.w/2, 140);
 
 	//Titulo
-	var tSala = new GameObject("tsala", 0, 0, "map", 141, 219);
+	var tSala = new GameObject("tsala", 0, 0, "gui", 141, 219);
 	tSala.setPosition(canvas.width/2 - tSala.w/2 - 370, 450 - 109);
 
 	//Movéis
@@ -332,12 +363,12 @@ function setSala(){
 	portaA.setPosition(canvas.width/2 - portaA.w/2 - 301, 210);
 
 	var portaH = new Button("porta_horizontal", 0, 0, function(){
-		se.mlevel.loadScene(5);
+		se.mlevel.loadScenePersist(5);
 	}, 14, 121);
 	portaH.setPosition(canvas.width/2 - portaH.w/2 - 200, 135);
 
 	var portaV = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(8);
+		se.mlevel.loadScenePersist(8);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 + 301, 260);
 
@@ -375,26 +406,36 @@ function setSala(){
 	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 + 250, 420);
 
 	var acessoCozinha = new Button("acesso_cozinha", 0, 0, function(){
-		se.mlevel.loadScene(6);
+		se.mlevel.loadScenePersist(6);
 	}, 59, 117);
 	acessoCozinha.setPosition(canvas.width/2 - acessoCozinha.w/2 + 220, 110);
 }
 
+banheiroIsLoaded = false;
 function setBanheiro(){
+
+	if( banheiroIsLoaded ){
+		console.log("segunda");
+		return;
+	}else{
+		console.log("primeira")
+		banheiroIsLoaded = true;
+	}
 
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
-	var banheiro = new GameObject("banheiro", 0, 0, "map", 431, 374);
+	//Parede
+	var banheiro = new GameObject("banheiro", 0, 0, "gui", 431, 374);
 	banheiro.setPosition(canvas.width/2 - banheiro.w/2, 270);
 
 	//Titulo
-	var tBanheiro = new GameObject("tbanheiro", 0, 0, "map", 141, 374);
+	var tBanheiro = new GameObject("tbanheiro", 0, 0, "gui", 141, 374);
 	tBanheiro.setPosition(canvas.width/2 - tBanheiro.w/2 - 290, 450 - 187);
 
 	//Movéis
 	var portaH = new Button("porta_horizontal", 0, 0, function(){
-		se.mlevel.loadScene(4);
+		se.mlevel.loadScenePersist(4);
 	}, 14, 121);
 	portaH.setPosition(canvas.width/2 - portaH.w/2 + 50, 635);
 
@@ -414,16 +455,26 @@ function setBanheiro(){
 	armario1.setPosition(canvas.width/2 - armario1.w/2 + 160, 420);
 }
 
+cozinhaIsLoaded = false;
 function setCozinha(){
+
+	if( cozinhaIsLoaded ){
+		console.log("segunda");
+		return;
+	}else{
+		console.log("primeira")
+		cozinhaIsLoaded = true;
+	}
 
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
-	var cozinha = new GameObject("cozinha", 0, 0, "map", 609, 374);
+	//Parede
+	var cozinha = new GameObject("cozinha", 0, 0, "gui", 609, 374);
 	cozinha.setPosition(canvas.width/2 - cozinha.w/2, 270);
 
 	//Titulo
-	var tCozinha = new GameObject("tcozinha", 0, 0, "map", 141, 333);
+	var tCozinha = new GameObject("tcozinha", 0, 0, "gui", 141, 333);
 	tCozinha.setPosition(canvas.width/2 - tCozinha.w/2 - 370, 450 - 166);
 
 	//Movéis
@@ -446,12 +497,12 @@ function setCozinha(){
 	piaC.setPosition(canvas.width/2 - piaC.w/2 - 250, 375);
 
 	var acessoSala = new Button("acesso_sala", 0, 0, function(){
-		se.mlevel.loadScene(4);
+		se.mlevel.loadScenePersist(4);
 	}, 59, 117);
 	acessoSala.setPosition(canvas.width/2 - acessoSala.w/2 + 232, 615);
 
 	var portaV = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(7);
+		se.mlevel.loadScenePersist(7);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 + 302, 430);
 
@@ -459,16 +510,26 @@ function setCozinha(){
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 - 60, 263);
 }
 
+lavanderiaIsLoaded = false;
 function setLavanderia(){
+
+	if( lavanderiaIsLoaded ){
+		console.log("segunda");
+		return;
+	}else{
+		console.log("primeira")
+		lavanderiaIsLoaded = true;
+	}
 
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
-	var lavanderia = new GameObject("lavanderia", 0, 0, "map", 668, 338);
+	//Parede
+	var lavanderia = new GameObject("lavanderia", 0, 0, "gui", 668, 338);
 	lavanderia.setPosition(canvas.width/2 - lavanderia.w/2, 285);
 
 	//Titulo
-	var tLavanderia = new GameObject("tlavanderia", 0, 0, "map", 141, 434);
+	var tLavanderia = new GameObject("tlavanderia", 0, 0, "gui", 141, 434);
 	tLavanderia.setPosition(canvas.width/2 - tLavanderia.w/2 - 400, 450 - 217);
 
 	//Movéis
@@ -491,26 +552,36 @@ function setLavanderia(){
 	cadeiraM2.setPosition(canvas.width/2 - cadeiraM2.w/2 - 100, 530);
 
 	var portaV = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(6);
+		se.mlevel.loadScenePersist(6);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 - 332, 440);
 
 	var portaH = new Button("porta_horizontal", 0, 0, function(){
-		se.mlevel.loadScene(8);
+		se.mlevel.loadScenePersist(8);
 	}, 14, 121);
 	portaH.setPosition(canvas.width/2 - portaH.w/2 - 210, 615);
 }
 
+garagemIsLoaded = false;
 function setGaragem(){
+
+	if( garagemIsLoaded ){
+		console.log("segunda");
+		return;
+	}else{
+		console.log("primeira")
+		garagemIsLoaded = true;
+	}
 
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
-	var garagem = new GameObject("garagem", 0, 0, "map", 457, 653);
+	//Parede
+	var garagem = new GameObject("garagem", 0, 0, "gui", 457, 653);
 	garagem.setPosition(canvas.width/2 - garagem.w/2, 128);
 
 	//Titulo
-	var tGaragem = new GameObject("tgaragem", 0, 0, "map", 141, 373);
+	var tGaragem = new GameObject("tgaragem", 0, 0, "gui", 141, 373);
 	tGaragem.setPosition(canvas.width/2 - tGaragem.w/2 - 300, 450 - 186);
 
 	//Movéis
@@ -518,12 +589,12 @@ function setGaragem(){
 	armario3.setPosition(canvas.width/2 - armario3.w/2 + 102, 148);
 
 	var portaH = new Button("porta_horizontal", 0, 0, function(){
-		se.mlevel.loadScene(7);
+		se.mlevel.loadScenePersist(7);
 	}, 14, 121);
 	portaH.setPosition(canvas.width/2 - portaH.w/2 - 120, 123);
 
 	var portaV = new Button("porta_vertical", 0, 0, function(){
-		se.mlevel.loadScene(4);
+		se.mlevel.loadScenePersist(4);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 - 226, 260);
 
