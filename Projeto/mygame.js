@@ -163,7 +163,7 @@ function startTiming(){
 	console.log( selectObjs[ selectObjRandom].animation[0].sprites[0].src );
 	
 	selectObjs[ selectObjRandom ].setAlpha(0);
-	setInterval( startTiming, 30*1000);
+	setTimeout( startTiming, 30*1000);
 }
 
 //Tem que ter isso para todos os levels (levelIsLoaded ...)
@@ -185,7 +185,7 @@ function setEntrada(){
 	//Parede
 	var entrada = new GameObject("entrada", 0, 0, "gui", 184, 630);
 	entrada.setPosition(canvas.width/2 - entrada.w/2, 140);
-
+	
 	//Titulo
 	var tEntrada = new GameObject("tentrada", 0, 0, "gui", 141, 347);
 	tEntrada.setPosition(canvas.width/2 - tEntrada.w/2 - 170, 450 - 173);
@@ -193,6 +193,16 @@ function setEntrada(){
 	//movéis
 	var tapeteP = new GameObject("tapete_pequeno", 0, 0, "map", 120, 78);
 	tapeteP.setPosition(canvas.width/2 - tapeteP.w/2, 660);
+	tapeteP.setAlpha(0);
+	tapeteP.setClick(function(){
+		//está bugado
+		if( this.getAlpha() == 0){
+			
+			modal.style.display = "block";
+		}else{
+			alert("não está bugado");
+		}
+	});
 
 	var vPlanta = new GameObject("vaso_planta", 0, 0, "map", 59, 58);
 	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2, 160);

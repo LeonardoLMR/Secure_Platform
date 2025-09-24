@@ -15,12 +15,29 @@
    <!-- scripts especificos o exemplo -->
 	<script src="bolinha.js"></script>
     <script src="mygame.js"></script>
-
+    <style>
+       #modal{
+        background-color: #fff;
+        height: 300px;
+        width: 500px;
+        border-radius: 10px;
+        font-size: 40px;
+        position: absolute;
+        z-index: 999;
+        top: 20px;
+        left: calc(50%);
+        display: none;
+       }
+    </style>
 </head>
 <body>
 
 <img src="resource/starterlogo.png" style="display:none" id="logohtml">
 <canvas id="gamecanvas" width="1861" height="903" style="background:none"></canvas>
-
+<div id="modal">
+    <span id="palavra"> PALAVRA CIFRADA</span>
+    <input type="text">
+    <button>Enviar</button>
+</div>
 </body>
 </html>

@@ -411,6 +411,30 @@ GameObject.prototype.translate = function(x, y) {
 GameObject.prototype.moveMouse = function (x, y) {
 
 }
+
+
+/**
+ * Chama a função estipulado quando há o clique
+ * @method
+ * @name Button.click
+ */
+GameObject.prototype.click = function(){
+    if(this.clickFunction != undefined)
+        this.clickFunction();
+}
+
+/**
+ * Atribui uma função à função de clique do botão
+ * @method
+ * @param {function} fn - função de clique
+ */
+GameObject.prototype.setClick = function(fn){
+    if(fn != undefined){
+        this.clickable = true;
+        this.clickFunction = fn;
+    }
+}
+
 /**
  * Representa uma figura Geométrica
  * @param {int} x -  Coordenada x do texto
@@ -2140,20 +2164,29 @@ ManagerMouse.prototype.start = function () {
         for(var i = 0; i < objects.length; i++) {
             element = objects[i];
 
-        if ((element.classename == "dragdrop") && (!element.dragdroped)){
+            if ((element.classename == "dragdrop") && (!element.dragdroped)){
 
-            if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
-                element.click();
-                break;
+                if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+                    element.click();
+                    break;
+                }
+
+            } else if (element.classename == "button") {
+                if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+                    element.click();
+                    break;
+                }
+
+            }else if ((element.clickable != undefined) && (element.clickable == true )) {
+                console.log( y, x, element.y, element.x, element.h, element.w);
+                if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
+                    
+                    element.click();
+                    break;
+                }
+
             }
-
-        } else if (element.classename == "button") {
-            if (y > element.y && y < element.y + element.h && x > element.x && x < element.x + element.w) {
-                element.click();
-                break;
-            }
-
-        }
+            
 
             if(i == objects.length-1){
                 se.mlevel.offDragdropFlag();
