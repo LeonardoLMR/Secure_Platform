@@ -207,10 +207,10 @@ function setEntrada(){
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 - 90, 450);
 
-	var portaH = new GameObject("porta_horizontal", 0, 0, "map", 121, 14);
+	var portaH = new GameObject("porta_horizontal", 0, 0, "gui", 121, 14);
 	portaH.setPosition(canvas.width/2 - portaH.w/2, 761);
 
-	var portaA = new Button("porta_vertical", 0, 0, function(){
+	var portaA = new Button("porta_arco", 0, 0, function(){
 		se.mlevel.loadScenePersist(4);
 	}, 258, 14);
 	portaA.setPosition(canvas.width/2 - portaA.w/2 + 90, 210);
@@ -357,7 +357,7 @@ function setSala(){
 	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 + 180, 758);
 
-	var portaA = new Button("porta_vertical", 0, 0, function(){
+	var portaA = new Button("porta_arco", 0, 0, function(){
 		se.mlevel.loadScenePersist(1);
 	}, 258, 14);
 	portaA.setPosition(canvas.width/2 - portaA.w/2 - 301, 210);
@@ -601,7 +601,7 @@ function setGaragem(){
 	var janelaV = new GameObject("janela_vertical", 0, 0, "map", 18, 129);
 	janelaV.setPosition(canvas.width/2 - janelaV.w/2 + 226, 260);
 	
-	var portaG = new GameObject("porta_garagem", 0, 0, "map", 321, 14);
+	var portaG = new GameObject("porta_garagem", 0, 0, "gui", 321, 14);
 	portaG.setPosition(canvas.width/2 - portaG.w/2, 772);
 
 	var carro = new GameObject("carro", 0, 0, "map", 215, 370);
