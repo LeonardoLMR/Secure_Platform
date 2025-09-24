@@ -177,7 +177,7 @@ Animation.prototype.autoSize = function(type){
  * @param {int} w - Largura do sprite
  * @param {int} h - Altura do sprite
  * @param {int} z - Profundidade
- * @param {int} a - Alfa
+ * @param {int} a - Alpha
  * @constructor
  */
 function GameObject(animations, x, y, classename, w, h, r, z, a) {
