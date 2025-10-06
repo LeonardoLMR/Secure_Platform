@@ -3,41 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Secure Platform</title>
-	
-    <!-- lib externa  -->
-    <script src="external_apis/howler.min.js"></script>
-	 <!-- starter.js -->
-    <script src="scripts/starterJS-0.1.2.js"></script>
 	 <!-- css do starterjs  -->
     <link href="resource/style.css" type="text/css" rel="stylesheet">
-	
-
-   <!-- scripts especificos o exemplo -->
-	<script src="bolinha.js"></script>
-    <script src="mygame.js"></script>
     <style>
        #modal{
-        background-color: #fff;
+        background-color: rgb(0, 94, 194);
         height: 300px;
         width: 500px;
+        border: solid 4px;
         border-radius: 10px;
-        font-size: 40px;
+        border-color: aliceblue;
         position: absolute;
         z-index: 999;
         top: 20px;
         left: calc(50%);
         display: none;
+        font-size: 40px;
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: aliceblue;
        }
     </style>
 </head>
-<body>
 
-<img src="resource/starterlogo.png" style="display:none" id="logohtml">
-<canvas id="gamecanvas" width="1861" height="903" style="background:none"></canvas>
-<div id="modal">
-    <span id="palavra"> PALAVRA CIFRADA</span>
-    <input type="text">
-    <button>Enviar</button>
-</div>
+<body>
+    <img src="resource/starterlogo.png" style="display:none" id="logohtml">
+    <canvas id="gamecanvas" width="1861" height="903" style="background:none"></canvas>
+
+    <div id="modal">
+        <br>
+        <span id="palavra">PALAVRA CIFRADA</span>
+        <span> <br><b>Cifra</b></span>
+        <br>
+        <input type="text">
+        <button>Enviar</button>
+    </div>
+
+    <!-- lib externa  -->
+    <script src="external_apis/howler.min.js"></script>
+	 <!-- starter.js -->
+    <script src="scripts/starterJS-0.1.2.js"></script>
+
+    <!-- scripts especificos o exemplo -->
+    <script src="bolinha.js"></script>
+    <script src="objetosCifrados.js"></script>
+    <script src="mygame.js"></script>
+
 </body>
+
 </html>

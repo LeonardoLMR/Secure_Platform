@@ -42,7 +42,7 @@ se.setResources = function () {
     this.loader.addResource("janela_horizontal", "Moveis/JanelaHorizontal.png", "image");
     this.loader.addResource("janela_vertical", "Moveis/JanelaVertical.png", "image");
     this.loader.addResource("lavadora", "Moveis/Lavadora.png", "image");
-    this.loader.addResource("mesa", "Moveis/Mesa.png", "image");
+    this.loader.addResource("mesa_principal", "Moveis/Mesa.png", "image");
     this.loader.addResource("mesa_lateral1", "Moveis/MesaLateral1.png", "image");
 	this.loader.addResource("mesa_lateral2", "Moveis/MesaLateral2.png", "image");
     this.loader.addResource("pia_banheiro", "Moveis/PiaBanheiro.png", "image");
@@ -62,6 +62,7 @@ se.setResources = function () {
 
 	this.loader.addResource("logo", "Menu/Logo.png", "image");
 	this.loader.addResource("jogar", "Menu/Jogar.png", "image");
+
 	this.loader.addResource("tentrada", "Titulos/TEntrada.png", "image");
 	this.loader.addResource("tquarto1", "Titulos/TQuarto1.png", "image");
 	this.loader.addResource("tquarto2", "Titulos/TQuarto2.png", "image");
@@ -72,7 +73,6 @@ se.setResources = function () {
 	this.loader.addResource("tgaragem", "Titulos/TGaragem.png", "image");
 
 };
-
 
 //Quando o loading acabar
 se.gameReady = function() {
@@ -146,6 +146,7 @@ function setMenu(){
 
 }
 
+//Temporizador
 function startTiming(){
 	//aleatorio de 1 até 8
 	selectLevel = Math.floor( (Math.random() * 8 ) + 1);
@@ -163,10 +164,9 @@ function startTiming(){
 	console.log( selectObjs[ selectObjRandom].animation[0].sprites[0].src );
 	
 	selectObjs[ selectObjRandom ].setAlpha(0);
-	setTimeout( startTiming, 30*1000);
+	setTimeout( startTiming, 1*1000);
 }
 
-//Tem que ter isso para todos os levels (levelIsLoaded ...)
 entradaIsLoaded = false;
 //Objetos da entrada e suas posições
 function setEntrada(){
@@ -190,23 +190,18 @@ function setEntrada(){
 	var tEntrada = new GameObject("tentrada", 0, 0, "gui", 141, 347);
 	tEntrada.setPosition(canvas.width/2 - tEntrada.w/2 - 170, 450 - 173);
 
-	//movéis
+	//movéis que podem bugar
 	var tapeteP = new GameObject("tapete_pequeno", 0, 0, "map", 120, 78);
 	tapeteP.setPosition(canvas.width/2 - tapeteP.w/2, 660);
-	tapeteP.setAlpha(0);
-	tapeteP.setClick(function(){
-		//está bugado
-		if( this.getAlpha() == 0){
-			
-			modal.style.display = "block";
-		}else{
-			alert("não está bugado");
-		}
-	});
+	tapeteP.name = "tapete_pequeno1";
+	verificacao(tapeteP); //verificação
 
 	var vPlanta = new GameObject("vaso_planta", 0, 0, "map", 59, 58);
 	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2, 160);
+	vPlanta.name = "vaso_planta1";
+	verificacao(vPlanta); //verificação
 
+	//Outros Moveís
 	var portaV = new Button("porta_vertical", 0, 0, function(){
 		se.mlevel.loadScenePersist(3);
 	}, 121, 14);
@@ -248,32 +243,47 @@ function setQuarto2(){
 	var tQuarto2 = new GameObject("tquarto2", 0, 0, "gui", 141, 370);
 	tQuarto2.setPosition(canvas.width/2 - tQuarto2.w/2 - 330, 450 - 185);
 
-	//movéis
+	//Movéis que podem bugar
 	var camaS = new GameObject("cama_solteiro", 0, 0, "map", 114, 247);
 	camaS.setPosition(canvas.width/2 - camaS.w/2 + 90, 412);
+	camaS.name = "cama_solteiro1";
+	verificacao(camaS); //verifcação
 
 	var guardaRoupa2 = new GameObject("guarda_roupa2", 0, 0, "map", 73, 215);
 	guardaRoupa2.setPosition(canvas.width/2 - guardaRoupa2.w/2 - 200, 250);
+	guardaRoupa2.name = "guarda_roupa21";
+	verificacao(guardaRoupa2); //verificação
 
 	var escrivaninha = new GameObject("escrivaninha", 0, 0, "map", 254, 94);
 	escrivaninha.setPosition(canvas.width/2 - escrivaninha.w/2 - 110, 565);
+	escrivaninha.name = "escrivaninha1";
+	verificacao(escrivaninha); //verificação
 
 	var cadeiraQ = new GameObject("cadeira_quartos", 0, 0, "map", 85, 69);
 	cadeiraQ.setPosition(canvas.width/2 - cadeiraQ.w/2 - 75, 482);
+	cadeiraQ.name = "cadeira_quartos1";
+	verificacao(cadeiraQ); //verificação
 
 	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 - 115, 665);
+	janelaH.name = "janela_horizontal1";
+	verificacao(janelaH); //verificação
 
 	var mesaLateral2 = new GameObject("mesa_lateral2", 0, 0, "map", 72, 79);
 	mesaLateral2.setPosition(canvas.width/2 - mesaLateral2.w/2 + 198, 580);
+	mesaLateral2.name = "mesa_lateral21";
+	verificacao(mesaLateral2); //verificação
 
+	var vPlanta = new GameObject("vaso_planta", 0, 0, "map", 59, 58);
+	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 - 200, 485);
+	vPlanta.name = "vaso_planta2";
+	verificacao(vPlanta); //verificação
+	
+	//Outros Móveis
 	var portaV = new Button("porta_vertical", 0, 0, function(){
 		se.mlevel.loadScenePersist(1);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 + 253, 260);
-
-	var vPlanta = new GameObject("vaso_planta", 0, 0, "map", 59, 58);
-	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 - 200, 485);
 }
 
 quarto1IsLoaded = false;
@@ -298,41 +308,62 @@ function setQuarto1(){
 	var tQuarto1 = new GameObject("tquarto1", 0, 0, "gui", 141, 370);
 	tQuarto1.setPosition(canvas.width/2 - tQuarto1.w/2 - 300, 450 - 185);
 
-	//Movéis
+	//Movéis que podem bugar
 	var guardaRoupa = new GameObject("guarda_roupa", 0, 0, "map", 73, 215);
 	guardaRoupa.setPosition(canvas.width/2 - guardaRoupa.w/2 + 170, 170);
+	guardaRoupa.name = "guarda_roupa22";
+	verificacao(guardaRoupa); //verificação
 
 	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 - 120, 143);
+	janelaH.name = "janela_horizontal2";
+	verificacao(janelaH); //verificação
 
 	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 + 40, 143);
+	janelaH.name = "janela_horizontal3";
+	verificacao(janelaH); //verificação
 
+	var escrivaninha = new GameObject("escrivaninha", 0, 0, "map", 254, 94);
+	escrivaninha.setPosition(canvas.width/2 - escrivaninha.w/2 - 85, 650);
+	escrivaninha.name = "escrivaninha2";
+	verificacao(escrivaninha); //verificação
+
+	var estante = new GameObject("estante", 0, 0, "map", 150, 58);
+	estante.setPosition(canvas.width/2 - estante.w/2 + 133, 685);
+	estante.name = "estante";
+	verificacao(estante); //verificação
+
+	var mesaLateral1 = new GameObject("mesa_lateral1", 0, 0, "map", 79, 72);
+	mesaLateral1.setPosition(canvas.width/2 - mesaLateral1.w/2 - 170, 200);
+	mesaLateral1.name = "mesa_lateral12";
+	verificacao(mesaLateral1); //verificação
+
+	var camaC = new GameObject("cama_casal", 0, 0, "map", 248, 214);
+	camaC.setPosition(canvas.width/2 - camaC.w/2 - 90, 285);
+	camaC.name = "cama_casal2";
+	verificacao(camaC); //verificação
+
+	var mesaLateral1 = new GameObject("mesa_lateral1", 0, 0, "map", 79, 72);
+	mesaLateral1.setPosition(canvas.width/2 - mesaLateral1.w/2 - 170, 515);
+	mesaLateral1.name = "mesa_lateral13";
+	verificacao(mesaLateral1); //verificação
+
+	var cadeiraQ = new GameObject("cadeira_quartos", 0, 0, "map", 85, 69);
+	cadeiraQ.setPosition(canvas.width/2 - cadeiraQ.w/2 - 65, 565);
+	cadeiraQ.name = "cadeira_quartos2";
+	verificacao(cadeiraQ); //verificação
+
+	var vPlanta = new GameObject("vaso_planta", 0, 0, "map", 59, 58);
+	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 + 170, 400);
+	vPlanta.name = "vaso_planta3";
+	verificacao(vPlanta); //verificação
+
+	// Outros Móveis
 	var portaV = new Button("porta_vertical", 0, 0, function(){
 		se.mlevel.loadScenePersist(1);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 + 227, 550);
-
-	var escrivaninha = new GameObject("escrivaninha", 0, 0, "map", 254, 94);
-	escrivaninha.setPosition(canvas.width/2 - escrivaninha.w/2 - 85, 650);
-
-	var estante = new GameObject("estante", 0, 0, "map", 150, 58);
-	estante.setPosition(canvas.width/2 - estante.w/2 + 133, 685);
-
-	var mesaLateral1 = new GameObject("mesa_lateral1", 0, 0, "map", 79, 72);
-	mesaLateral1.setPosition(canvas.width/2 - mesaLateral1.w/2 - 170, 200);
-
-	var camaC = new GameObject("cama_casal", 0, 0, "map", 248, 214);
-	camaC.setPosition(canvas.width/2 - camaC.w/2 - 90, 285);
-
-	var mesaLateral1 = new GameObject("mesa_lateral1", 0, 0, "map", 79, 72);
-	mesaLateral1.setPosition(canvas.width/2 - mesaLateral1.w/2 - 170, 515);
-
-	var cadeiraQ = new GameObject("cadeira_quartos", 0, 0, "map", 85, 69);
-	cadeiraQ.setPosition(canvas.width/2 - cadeiraQ.w/2 - 65, 565);
-
-	var vPlanta = new GameObject("vaso_planta", 0, 0, "map", 59, 58);
-	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 + 170, 400);
 }
 
 salaIsLoaded = false;
@@ -357,16 +388,78 @@ function setSala(){
 	var tSala = new GameObject("tsala", 0, 0, "gui", 141, 219);
 	tSala.setPosition(canvas.width/2 - tSala.w/2 - 370, 450 - 109);
 
-	//Movéis
+	//Movéis que podem bugar
 	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2, 758);
+	janelaH.name = "janela_horizontal4";
+	verificacao(janelaH); //verificação
 
 	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 - 180, 758);
+	janelaH.name = "janela_horizontal5";
+	verificacao(janelaH); //verificação
 
 	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
 	janelaH.setPosition(canvas.width/2 - janelaH.w/2 + 180, 758);
+	janelaH.name = "janela_horizontal6";
+	verificacao(janelaH); //verificação
 
+	var hack = new GameObject("hack", 0, 0, "map", 71, 237);
+	hack.setPosition(canvas.width/2 - hack.w/2 + 250, 500);
+	hack.name = "hack1";
+	verificacao(hack); //verificação
+
+	var centro = new GameObject("centro", 0, 0, "map", 72, 96);
+	centro.setPosition(canvas.width/2 - centro.w/2 + 80, 570);
+	centro.name = "centro1";
+	verificacao(centro); //verificação
+
+	var tapeteG = new GameObject("tapete_grande", 0, 0, "map", 181, 249);
+	tapeteG.setPosition(canvas.width/2 - tapeteG.w/2 + 80, 492);
+	tapeteG.name = "tapete_grande1";
+	verificacao(tapeteG); //verificação
+
+	var sofa = new GameObject("sofa", 0, 0, "map", 153, 211);
+	sofa.setPosition(canvas.width/2 - sofa.w/2 - 180, 460);
+	sofa.name = "sofa1";
+	verificacao(sofa); //verificação
+
+	var poltrona = new GameObject("poltrona", 0, 0, "map", 90, 93);
+	poltrona.setPosition(canvas.width/2 - poltrona.w/2 - 90, 640);
+	poltrona.name = "poltrona1";
+	verificacao(poltrona); //verificação
+
+	var mesaP = new GameObject("mesa_principal", 0, 0, "map", 241, 95);
+	mesaP.setPosition(canvas.width/2 - mesaP.w/2, 240);
+	mesaP.name = "mesa_principal1";
+	verificacao(mesaP); //verificação
+
+	var cadeiraM1 = new GameObject("cadeira_mesa1", 0, 0, "map", 60, 70);
+	cadeiraM1.setPosition(canvas.width/2 - cadeiraM1.w/2 + 50, 165);
+	cadeiraM1.name = "cadeira_mesa11";
+	verificacao(cadeiraM1); //verificação
+
+	var cadeiraM1 = new GameObject("cadeira_mesa1", 0, 0, "map", 60, 70);
+	cadeiraM1.setPosition(canvas.width/2 - cadeiraM1.w/2 - 50, 165);
+	cadeiraM1.name = "cadeira_mesa12";
+	verificacao(cadeiraM1); //verificação
+
+	var cadeiraM2 = new GameObject("cadeira_mesa2", 0, 0, "map", 60, 70);
+	cadeiraM2.setPosition(canvas.width/2 - cadeiraM2.w/2 + 50, 340);
+	cadeiraM2.name = "cadeira_mesa21";
+	verificacao(cadeiraM2); //verificação
+
+	var cadeiraM2 = new GameObject("cadeira_mesa2", 0, 0, "map", 60, 70);
+	cadeiraM2.setPosition(canvas.width/2 - cadeiraM2.w/2 - 50, 340);
+	cadeiraM2.name = "cadeira_mesa22";
+	verificacao(cadeiraM2); //verificação
+
+	var vPlanta = new GameObject("vaso_planta", 0, 0, "map", 59, 58);
+	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 + 250, 420);
+	vPlanta.name = "vaso_planta3";
+	verificacao(vPlanta); //verificação
+	
+	//Outros Moveis
 	var portaA = new Button("porta_arco", 0, 0, function(){
 		se.mlevel.loadScenePersist(1);
 	}, 258, 14);
@@ -381,39 +474,6 @@ function setSala(){
 		se.mlevel.loadScenePersist(8);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 + 301, 260);
-
-	var hack = new GameObject("hack", 0, 0, "map", 71, 237);
-	hack.setPosition(canvas.width/2 - hack.w/2 + 250, 500);
-
-	var tapeteG = new GameObject("tapete_grande", 0, 0, "map", 181, 249);
-	tapeteG.setPosition(canvas.width/2 - tapeteG.w/2 + 80, 492);
-
-	var centro = new GameObject("centro", 0, 0, "map", 72, 96);
-	centro.setPosition(canvas.width/2 - centro.w/2 + 80, 570);
-
-	var sofa = new GameObject("sofa", 0, 0, "map", 153, 211);
-	sofa.setPosition(canvas.width/2 - sofa.w/2 - 180, 460);
-
-	var poltrona = new GameObject("poltrona", 0, 0, "map", 90, 93);
-	poltrona.setPosition(canvas.width/2 - poltrona.w/2 - 90, 640);
-
-	var mesa = new GameObject("mesa", 0, 0, "map", 241, 95);
-	mesa.setPosition(canvas.width/2 - mesa.w/2, 240);
-
-	var cadeiraM1 = new GameObject("cadeira_mesa1", 0, 0, "map", 60, 70);
-	cadeiraM1.setPosition(canvas.width/2 - cadeiraM1.w/2 + 50, 165);
-
-	var cadeiraM1 = new GameObject("cadeira_mesa1", 0, 0, "map", 60, 70);
-	cadeiraM1.setPosition(canvas.width/2 - cadeiraM1.w/2 - 50, 165);
-
-	var cadeiraM2 = new GameObject("cadeira_mesa2", 0, 0, "map", 60, 70);
-	cadeiraM2.setPosition(canvas.width/2 - cadeiraM2.w/2 + 50, 340);
-
-	var cadeiraM2 = new GameObject("cadeira_mesa2", 0, 0, "map", 60, 70);
-	cadeiraM2.setPosition(canvas.width/2 - cadeiraM2.w/2 - 50, 340);
-
-	var vPlanta = new GameObject("vaso_planta", 0, 0, "map", 59, 58);
-	vPlanta.setPosition(canvas.width/2 - vPlanta.w/2 + 250, 420);
 
 	var acessoCozinha = new Button("acesso_cozinha", 0, 0, function(){
 		se.mlevel.loadScenePersist(6);
@@ -443,26 +503,37 @@ function setBanheiro(){
 	var tBanheiro = new GameObject("tbanheiro", 0, 0, "gui", 141, 374);
 	tBanheiro.setPosition(canvas.width/2 - tBanheiro.w/2 - 290, 450 - 187);
 
-	//Movéis
+	//Movéis que podem bugar
+	var box = new GameObject("box", 0, 0, "map", 18, 374);
+	box.setPosition(canvas.width/2 - box.w/2 - 50, 270);
+	box.name = "box1";
+	verificacao(box); //verificação
+
+	var chuveiro = new GameObject("chuveiro", 0, 0, "map", 73, 121);
+	chuveiro.setPosition(canvas.width/2 - chuveiro.w/2 - 135, 270);
+	chuveiro.name = "chuveiro1";
+	verificacao(chuveiro); //verificação
+
+	var privada = new GameObject("privada", 0, 0, "map", 78, 98);
+	privada.setPosition(canvas.width/2 - privada.w/2 + 25, 285);
+	privada.name = "privada1";
+	verificacao(privada); //verificação
+
+	var piaB = new GameObject("pia_banheiro", 0, 0, "map", 83, 76);
+	piaB.setPosition(canvas.width/2 - piaB.w/2 + 140, 270);
+	piaB.name = "pia_banheiro1";
+	verificacao(piaB); //verificação
+
+	var armario1 = new GameObject("armario1", 0, 0, "map", 73, 162);
+	armario1.setPosition(canvas.width/2 - armario1.w/2 + 160, 420);
+	armario1.name = "armario11";
+	verificacao(armario1); //verificação
+
+	// Outros Móveis
 	var portaH = new Button("porta_horizontal", 0, 0, function(){
 		se.mlevel.loadScenePersist(4);
 	}, 14, 121);
 	portaH.setPosition(canvas.width/2 - portaH.w/2 + 50, 635);
-
-	var box = new GameObject("box", 0, 0, "map", 18, 374);
-	box.setPosition(canvas.width/2 - box.w/2 - 50, 270);
-
-	var chuveiro = new GameObject("chuveiro", 0, 0, "map", 73, 121);
-	chuveiro.setPosition(canvas.width/2 - chuveiro.w/2 - 135, 270);
-
-	var privada = new GameObject("privada", 0, 0, "map", 78, 98);
-	privada.setPosition(canvas.width/2 - privada.w/2 + 25, 285);
-
-	var piaB = new GameObject("pia_banheiro", 0, 0, "map", 83, 76);
-	piaB.setPosition(canvas.width/2 - piaB.w/2 + 140, 270);
-
-	var armario1 = new GameObject("armario1", 0, 0, "map", 73, 162);
-	armario1.setPosition(canvas.width/2 - armario1.w/2 + 160, 420);
 }
 
 cozinhaIsLoaded = false;
@@ -487,25 +558,43 @@ function setCozinha(){
 	var tCozinha = new GameObject("tcozinha", 0, 0, "gui", 141, 333);
 	tCozinha.setPosition(canvas.width/2 - tCozinha.w/2 - 370, 450 - 166);
 
-	//Movéis
+	//Movéis que podem bugar
 	var balcao1 = new GameObject("balcao1", 0, 0, "map", 109, 109);
 	balcao1.setPosition(canvas.width/2 - balcao1.w/2 + 110, 535);
+	balcao1.name = "balcao11";
+	verificacao(balcao1); //verificação
 
 	var balcao2 = new GameObject("balcao2", 0, 0, "map", 228, 109);
 	balcao2.setPosition(canvas.width/2 - balcao2.w/2 - 190, 535);
+	balcao2.name = "balcao21";
+	verificacao(balcao2); //verificação
 
 	var balcao3 = new GameObject("balcao3", 0, 0, "map", 374, 109);
 	balcao3.setPosition(canvas.width/2 - balcao3.w/2 - 117, 270);
+	balcao3.name = "balcao31";
+	verificacao(balcao3); //verificação
 
 	var geladeira = new GameObject("geladeira", 0, 0, "map", 206, 95);
 	geladeira.setPosition(canvas.width/2 - geladeira.w/2 + 185, 285);
+	geladeira.name = "geladeira1";
+	verificacao(geladeira); //verificação
 
 	var fogao = new GameObject("fogao", 0, 0, "map", 105, 105);
 	fogao.setPosition(canvas.width/2 - fogao.w/2 - 10, 525);
+	fogao.name = "fogao11";
+	verificacao(fogao); //verificação
 
 	var piaC = new GameObject("pia_cozinha", 0, 0, "map", 109, 163);
 	piaC.setPosition(canvas.width/2 - piaC.w/2 - 250, 375);
+	piaC.name = "pia_cozinha1";
+	verificacao(piaC); //verificação
 
+	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
+	janelaH.setPosition(canvas.width/2 - janelaH.w/2 - 60, 263);
+	janelaH.name = "janela_horizontal7";
+	verificacao(janelaH); //verificação
+
+	// Outros Móveis
 	var acessoSala = new Button("acesso_sala", 0, 0, function(){
 		se.mlevel.loadScenePersist(4);
 	}, 59, 117);
@@ -515,9 +604,6 @@ function setCozinha(){
 		se.mlevel.loadScenePersist(7);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 + 302, 430);
-
-	var janelaH = new GameObject("janela_horizontal", 0, 0, "map", 129, 18);
-	janelaH.setPosition(canvas.width/2 - janelaH.w/2 - 60, 263);
 }
 
 lavanderiaIsLoaded = false;
@@ -542,25 +628,38 @@ function setLavanderia(){
 	var tLavanderia = new GameObject("tlavanderia", 0, 0, "gui", 141, 434);
 	tLavanderia.setPosition(canvas.width/2 - tLavanderia.w/2 - 400, 450 - 217);
 
-	//Movéis
+	//Movéis que podem bugar
 	var lavadora = new GameObject("lavadora", 0, 0, "map", 89, 109);
 	lavadora.setPosition(canvas.width/2 - lavadora.w/2 - 272, 300);
-	
-	var balcao4 = new GameObject("balcao4", 0, 0, "map", 288, 109);
-	balcao4.setPosition(canvas.width/2 - balcao4.w/2 - 70, 285);
-
-	var varal = new GameObject("varal", 0, 0, "map", 139, 334);
-	varal.setPosition(canvas.width/2 - varal.w/2 + 150, 287);
+	lavadora.name = "lavadora1";
+	verificacao(lavadora); //verificação
 
 	var piaL = new GameObject("pia_lavanderia", 0, 0, "map", 83, 85);
 	piaL.setPosition(canvas.width/2 - piaL.w/2 - 140, 285);
+	piaL.name = "pia_lavanderia1";
+	verificacao(piaL); //verificação
+	
+	var balcao4 = new GameObject("balcao4", 0, 0, "map", 288, 109);
+	balcao4.setPosition(canvas.width/2 - balcao4.w/2 - 70, 285);
+	balcao4.name = "balcao41";
+	verificacao(balcao4); //verificação
+
+	var varal = new GameObject("varal", 0, 0, "map", 139, 334);
+	varal.setPosition(canvas.width/2 - varal.w/2 + 150, 287);
+	varal.name = "varal1";
+	verificacao(varal); //verificação
 
 	var armario2 = new GameObject("armario2", 0, 0, "map", 73, 215);
 	armario2.setPosition(canvas.width/2 - armario2.w/2 + 282, 300);
+	armario2.name = "armario21";
+	verificacao(armario2); //verificação
 
 	var cadeiraM2 = new GameObject("cadeira_mesa2", 0, 0, "map", 60, 70);
 	cadeiraM2.setPosition(canvas.width/2 - cadeiraM2.w/2 - 100, 530);
+	cadeiraM2.name = "cadeira_mesa23";
+	verificacao(cadeiraM2); //verificação
 
+	//Outros Móveis
 	var portaV = new Button("porta_vertical", 0, 0, function(){
 		se.mlevel.loadScenePersist(6);
 	}, 121, 14);
@@ -594,10 +693,23 @@ function setGaragem(){
 	var tGaragem = new GameObject("tgaragem", 0, 0, "gui", 141, 373);
 	tGaragem.setPosition(canvas.width/2 - tGaragem.w/2 - 300, 450 - 186);
 
-	//Movéis
+	//Movéis que podem bugar
 	var armario3 = new GameObject("armario3", 0, 0, "map", 215, 73);
 	armario3.setPosition(canvas.width/2 - armario3.w/2 + 102, 148);
+	armario3.name = "armario31";
+	verificacao(armario3); //verificação
 
+	var carro = new GameObject("carro", 0, 0, "map", 215, 370);
+	carro.setPosition(canvas.width/2 - carro.w/2, 320);
+	carro.name = "carro1";
+	verificacao(carro); //verificação
+
+	var janelaV = new GameObject("janela_vertical", 0, 0, "map", 18, 129);
+	janelaV.setPosition(canvas.width/2 - janelaV.w/2 + 226, 260);
+	janelaV.name = "janela_vertical1";
+	verificacao(janelaV); //verificação
+
+	// Outros Móveis
 	var portaH = new Button("porta_horizontal", 0, 0, function(){
 		se.mlevel.loadScenePersist(7);
 	}, 14, 121);
@@ -607,15 +719,9 @@ function setGaragem(){
 		se.mlevel.loadScenePersist(4);
 	}, 121, 14);
 	portaV.setPosition(canvas.width/2 - portaV.w/2 - 226, 260);
-
-	var janelaV = new GameObject("janela_vertical", 0, 0, "map", 18, 129);
-	janelaV.setPosition(canvas.width/2 - janelaV.w/2 + 226, 260);
 	
 	var portaG = new GameObject("porta_garagem", 0, 0, "gui", 321, 14);
 	portaG.setPosition(canvas.width/2 - portaG.w/2, 772);
-
-	var carro = new GameObject("carro", 0, 0, "map", 215, 370);
-	carro.setPosition(canvas.width/2 - carro.w/2, 320);
 }
 
 function setJogo(){
@@ -710,4 +816,90 @@ function setJogo(){
 		this.setText("VALOR: " + valor);
 	}
 	*/
+}
+
+//Função para recuperar os moveis
+document.addEventListener("DOMContentLoaded", function() {
+	// 🔹 Pega os elementos do modal
+	const modal = document.getElementById("modal");
+	const input = modal.querySelector("input");
+	const botao = modal.querySelector("button");
+
+	// 🔹 Quando clicar em "Enviar"
+	botao.addEventListener("click", function() {
+		// lê o número digitado e transforma em número inteiro
+		const numeroDigitado = parseInt(input.value, 10);
+
+		// se o input não é número, fecha o modal e não faz nada
+			if (isNaN(numeroDigitado)) {
+				modal.style.display = "none";
+				input.value = "";
+				return;
+			}
+
+		// verifica se o número digitado é igual ao deslocamento correto
+		if (numeroDigitado === window.deslocamentoCorreto) {
+			// ✅ acerto — faz o objeto reaparecer
+			window.objetoAtual.setAlpha(1);
+
+			alert("Objeto restaurado com sucesso!");
+		} else {
+			// ❌ erro — nada acontece além de fechar o modal
+			alert("Número incorreto!");
+		}
+
+		// limpa o campo e fecha o modal
+		input.value = "";
+		modal.style.display = "none";
+	});
+
+	input.addEventListener("keydown", function(e) {
+		if (e.key === "Enter") botao.click();
+	});
+});
+
+//Função para corrigir nomes
+function obterNomeBase(nomeObjeto) {
+  nomeObjeto = nomeObjeto.replace(/\d+$/, ""); // remove número no final
+
+  if (nomeObjeto.startsWith("armario")) return "armario";
+  if (nomeObjeto.startsWith("balcao")) return "balcao";
+  if (nomeObjeto.startsWith("cama")) return "cama";
+  if (nomeObjeto.startsWith("mesa_lateral")) return "mesa_lateral";
+  if (nomeObjeto.startsWith("mesa_principal")) return "mesa_principal";
+  if (nomeObjeto.startsWith("tapete")) return "tapete";
+  if (nomeObjeto.startsWith("janela")) return "janela";
+  if (nomeObjeto.startsWith("pia")) return "pia";
+  if (nomeObjeto.startsWith("guarda_roupa")) return "guarda_roupa";
+  if (nomeObjeto.startsWith("cadeira")) return "cadeira";
+
+  return nomeObjeto;
+}
+
+function verificacao(objeto) {
+	//Se estiver bugado
+    objeto.setClick(function() {
+        if (this.getAlpha() === 0) {
+            const deslocamento = Math.floor(Math.random() * 10) + 1;
+
+			//Obtem o nome base do objeto, isso a importante para a cifra funcionar corretamente
+            const nomeBase = obterNomeBase(this.name);
+            const cifrado = window.objetosCifrados[nomeBase]?.[deslocamento];
+
+            if (!cifrado) {
+                console.warn(`Cifra não encontrada para ${nomeBase} (${deslocamento})`);
+                return;
+            }
+			// coloca a palavra cifrada no <b> dentro do modal
+            document.querySelector("#modal b").textContent = cifrado;
+			// mostra o modal
+            document.getElementById("modal").style.display = "block";
+
+			// guarda referência para verificar depois
+            window.objetoAtual = this;
+            window.deslocamentoCorreto = deslocamento;
+        } else {
+            alert("não está bugado");
+        }
+    });
 }
