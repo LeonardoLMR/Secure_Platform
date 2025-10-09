@@ -1,3 +1,10 @@
+// --- Variáveis globais ---
+let bugCount = 0; // número de bugs
+let totalTime = 20 * 60; // 20 minutos em segundos
+let gameTimer = null; //tempo de jogo
+let jogoAtivo = false; //jogo ativo ou não
+
+// --- Starter Engine ------------------------------------------------------------------------------------------------
 const se = new StarterEngine();
 
 se.valor;
@@ -62,6 +69,8 @@ se.setResources = function () {
 
 	this.loader.addResource("logo", "Menu/Logo.png", "image");
 	this.loader.addResource("jogar", "Menu/Jogar.png", "image");
+	this.loader.addResource("derrota", "Menu/Derrota.png", "image");
+	this.loader.addResource("vitoria", "Menu/Vitoria.png", "image");
 
 	this.loader.addResource("tentrada", "Titulos/TEntrada.png", "image");
 	this.loader.addResource("tquarto1", "Titulos/TQuarto1.png", "image");
@@ -104,19 +113,27 @@ se.gameReady = function() {
 	var garagem = new Scene();
 	garagem.setFunctionStart( setGaragem );
 
+	var derrota = new Scene();
+	derrota.setFunctionStart( setDerrota );
+
+	var vitoria = new Scene();
+	vitoria.setFunctionStart( setVitoria );
+
 	var jogo = new Scene();
 	jogo.setFunctionStart( setJogo );
 
-	this.mlevel.addScene(menu);
-	this.mlevel.addScene(entrada);
-	this.mlevel.addScene(quarto2);
-	this.mlevel.addScene(quarto1);
-	this.mlevel.addScene(sala);
-	this.mlevel.addScene(banheiro);
-	this.mlevel.addScene(cozinha);
-	this.mlevel.addScene(lavanderia);
-	this.mlevel.addScene(garagem);
-	this.mlevel.addScene(jogo);
+	this.mlevel.addScene(menu); //00
+	this.mlevel.addScene(entrada); //01
+	this.mlevel.addScene(quarto2); //02
+	this.mlevel.addScene(quarto1); //03
+	this.mlevel.addScene(sala); //04
+	this.mlevel.addScene(banheiro); //05
+	this.mlevel.addScene(cozinha); //06
+	this.mlevel.addScene(lavanderia); //07
+	this.mlevel.addScene(garagem); //08
+	this.mlevel.addScene(derrota); //09
+	this.mlevel.addScene(vitoria); //10
+	this.mlevel.addScene(jogo); //11
 }
 
 //Objetos do Menu
@@ -126,7 +143,7 @@ function setMenu(){
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
 	var logo = new GameObject("logo", 0, 0, "gui");
-	logo.setPosition( canvas.width/2 - logo.w/2, 130);
+	logo.setPosition( canvas.width/2 - logo.w/2 - 23, 130);
 
 	var jogar = new Button("jogar", 0, 0, function(){
 		se.mlevel.loadScene(1);
@@ -138,33 +155,74 @@ function setMenu(){
 		se.mlevel.loadScene(7);
 		se.mlevel.loadScene(8);
 		se.mlevel.loadScene(9);
+		se.mlevel.loadScene(10);
+		se.mlevel.loadScene(11);
 		se.mlevel.loadScenePersist(1);
+
+		jogoAtivo = true;
+		bugCount = 0;
 		
-		startTiming();
+		console.log("🕒 Você tem 30 segundos para observar a casa 🕒");
+
+        // Espera 30 segundos antes de iniciar os bugs
+        setTimeout(() => {
+            console.log("⚠️ Inicio dos Bugs ⚠️");
+            startTiming();
+			totalTime = 1200; // 20 minutos em segundos
+			iniciarContagemVitoria();
+        }, 30*1000); // 30 segundos
 	});
-	jogar.setPosition( canvas.width/2 - jogar.w/2, 550);
+	jogar.setPosition( canvas.width/2 - jogar.w/2 - 23, 550);
 
 }
 
 //Temporizador
 function startTiming(){
-	//aleatorio de 1 até 8
-	selectLevel = Math.floor( (Math.random() * 8 ) + 1);
-	selectScene = se.mlevel.getScene(selectLevel);
-	console.log( selectScene);
-	//pegando todos os objetos
-	objs = selectScene.getObjects();
-	console.log( objs);
-	selectObjs = objs.filter(obj => obj.classename == "map");
-	console.log( selectObjs);
-	selectObjRandom = Math.floor( (Math.random() * selectObjs.length ) );
+	if (!jogoAtivo) return; // Evita rodar caso o jogo tenha terminado
 
-	console.log("Bug em - Cena " + selectLevel + " objeto "+ selectObjRandom );
-	console.log( selectObjs[ selectObjRandom]);
-	console.log( selectObjs[ selectObjRandom].animation[0].sprites[0].src );
+	// Seleciona aleatoriamente uma cena entre 1 e 8
+	const level = Math.floor((Math.random() * 8) + 1);
+	const scene = se.mlevel.getScene(level);
+	const objects = scene.getObjects();
 	
-	selectObjs[ selectObjRandom ].setAlpha(0);
-	setTimeout( startTiming, 1*1000);
+	// Pega apenas objetos da classe "map" que estão visíveis
+	const visibleObjects = objects.filter(
+    	obj => obj.classename === "map" && obj.getAlpha() !== 0
+	);
+
+	// Se não há objetos visíveis, pula para o próximo ciclo
+	if (visibleObjects.length === 0) {
+		console.warn(`Nenhum objeto visível na cena ${level}, pulando...`);
+		setTimeout(startTiming, 1*1000);
+		return;
+	}
+	// Escolhe um objeto aleatório e buga
+	const randomIndex = Math.floor(Math.random() * visibleObjects.length);
+	const randomObj = visibleObjects[randomIndex];
+
+	console.log(
+    	`Bug em - Cena ${level} - Objeto ${randomIndex} (${randomObj.name || "sem nome"})`
+  	);
+  	console.log(randomObj);
+
+	// Deixa o objeto invisivel
+  	randomObj.setAlpha(0);
+
+	// Incrementa o contador de bugs
+	bugCount++;
+	console.log(`🐛 Novo bug! Total: ${bugCount}`);
+
+	// Se o número de bugs chegar a 6, derrota
+	if (bugCount >= 6) {
+		console.log("💀 DERROTA! Muitos bugs!");
+		jogoAtivo = false;
+		clearInterval(gameTimer); // para o cronômetro de 20 minutos
+		setDerrota();
+		return; // impede o próximo ciclo
+	}
+
+	// Tempo para um bug surgir novamente
+	setTimeout(startTiming, 30*1000);
 }
 
 entradaIsLoaded = false;
@@ -190,7 +248,7 @@ function setEntrada(){
 	var tEntrada = new GameObject("tentrada", 0, 0, "gui", 141, 347);
 	tEntrada.setPosition(canvas.width/2 - tEntrada.w/2 - 170, 450 - 173);
 
-	//movéis que podem bugar
+	//Movéis que podem bugar
 	var tapeteP = new GameObject("tapete_pequeno", 0, 0, "map", 120, 78);
 	tapeteP.setPosition(canvas.width/2 - tapeteP.w/2, 660);
 	tapeteP.name = "tapete_pequeno1";
@@ -818,14 +876,30 @@ function setJogo(){
 	*/
 }
 
+function setDerrota(){
+	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
+	bg.setPosition(canvas.width/2 - bg.w/2, 5);
+
+	var derrota = new GameObject("derrota", 0, 0, "gui", 801, 567);
+	derrota.setPosition( canvas.width/2 - derrota.w/2 - 23, 175);
+}
+
+function setVitoria(){
+	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
+	bg.setPosition(canvas.width/2 - bg.w/2, 5);
+
+	var vitoria = new GameObject("vitoria", 0, 0, "gui", 914, 582);
+	vitoria.setPosition( canvas.width/2 - vitoria.w/2 - 23, 165);
+}
+
 //Função para recuperar os moveis
 document.addEventListener("DOMContentLoaded", function() {
-	// 🔹 Pega os elementos do modal
+	// Pega os elementos do modal
 	const modal = document.getElementById("modal");
 	const input = modal.querySelector("input");
 	const botao = modal.querySelector("button");
 
-	// 🔹 Quando clicar em "Enviar"
+	// Quando clicar em "Enviar"
 	botao.addEventListener("click", function() {
 		// lê o número digitado e transforma em número inteiro
 		const numeroDigitado = parseInt(input.value, 10);
@@ -836,15 +910,20 @@ document.addEventListener("DOMContentLoaded", function() {
 				input.value = "";
 				return;
 			}
-
+			
+		
 		// verifica se o número digitado é igual ao deslocamento correto
 		if (numeroDigitado === window.deslocamentoCorreto) {
-			// ✅ acerto — faz o objeto reaparecer
+			// acerto — faz o objeto reaparecer
 			window.objetoAtual.setAlpha(1);
+
+			// 🔽 Diminui o contador de bugs
+			bugCount--;
+			console.log(`🧹 Bug consertado! Restam ${bugCount}`);
 
 			alert("Objeto restaurado com sucesso!");
 		} else {
-			// ❌ erro — nada acontece além de fechar o modal
+			// erro — nada acontece além de fechar o modal
 			alert("Número incorreto!");
 		}
 
@@ -902,4 +981,17 @@ function verificacao(objeto) {
             alert("não está bugado");
         }
     });
+}
+
+function iniciarContagemVitoria() {
+  gameTimer = setInterval(() => {
+    totalTime--;
+
+    // Se o tempo acabou → vitória
+    if (totalTime <= 0) {
+      clearInterval(gameTimer);
+      jogoAtivo = false;
+      setVitoria();
+    }
+  }, 1000);
 }
