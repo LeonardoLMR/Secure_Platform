@@ -71,6 +71,7 @@ se.setResources = function () {
 	this.loader.addResource("jogar", "Menu/Jogar.png", "image");
 	this.loader.addResource("derrota", "Menu/Derrota.png", "image");
 	this.loader.addResource("vitoria", "Menu/Vitoria.png", "image");
+	this.loader.addResource("aviso", "Menu/Aviso.png", "image");
 
 	this.loader.addResource("tentrada", "Titulos/TEntrada.png", "image");
 	this.loader.addResource("tquarto1", "Titulos/TQuarto1.png", "image");
@@ -119,8 +120,8 @@ se.gameReady = function() {
 	var vitoria = new Scene();
 	vitoria.setFunctionStart( setVitoria );
 
-	var jogo = new Scene();
-	jogo.setFunctionStart( setJogo );
+	var menu2 = new Scene();
+	menu2.setFunctionStart( setMenu2 );
 
 	this.mlevel.addScene(menu); //00
 	this.mlevel.addScene(entrada); //01
@@ -133,12 +134,11 @@ se.gameReady = function() {
 	this.mlevel.addScene(garagem); //08
 	this.mlevel.addScene(derrota); //09
 	this.mlevel.addScene(vitoria); //10
-	this.mlevel.addScene(jogo); //11
+	this.mlevel.addScene(menu2); //11
 }
 
 //Objetos do Menu
 function setMenu(){
-
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
@@ -157,10 +157,22 @@ function setMenu(){
 		se.mlevel.loadScene(9);
 		se.mlevel.loadScene(10);
 		se.mlevel.loadScene(11);
+		se.mlevel.loadScenePersist(11);
+	});
+	jogar.setPosition( canvas.width/2 - jogar.w/2 - 23, 550);
+
+}
+
+function setMenu2(){
+	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
+	bg.setPosition(canvas.width/2 - bg.w/2, 5);
+
+	var aviso = new Button("aviso", 0, 0, function(){
 		se.mlevel.loadScenePersist(1);
 
 		jogoAtivo = true;
 		bugCount = 0;
+		ativarHoverNomes();
 		
 		console.log("🕒 Você tem 30 segundos para observar a casa 🕒");
 
@@ -171,9 +183,8 @@ function setMenu(){
 			totalTime = 1200; // 20 minutos em segundos
 			iniciarContagemVitoria();
         }, 30*1000); // 30 segundos
-	});
-	jogar.setPosition( canvas.width/2 - jogar.w/2 - 23, 550);
-
+	}, 613, 850);
+	aviso.setPosition( canvas.width/2 - aviso.w/2 - 10, 155);
 }
 
 //Temporizador
@@ -782,101 +793,9 @@ function setGaragem(){
 	portaG.setPosition(canvas.width/2 - portaG.w/2, 772);
 }
 
-function setJogo(){
-
-	/*
-	new GameObject("linha", 20,120,"bloco1", 660, 5);
-	new GameObject("linha", 20,220,"bloco1", 660, 5);
-	new GameObject("linha", 20,320,"bloco1", 660, 5);
-	new GameObject("linha", 20,420,"bloco1", 660, 5);
-
-
-	new GameObject("bloco", 20,20,"bloco1", 660, 20);
-	new GameObject("bloco", 20,520,"bloco1", 660, 20);
-	new GameObject("bloco2", 20,20,"bloco1",20, 500);
-	new GameObject("bloco2", 660,20,"bloco1",20, 500);
-	
-	//bolas
-	
-	anim = new Animation( ["bola_amarela"]);
-	anim2 = new Animation( ["bola_amarela_on"]);
-
-	
-	b01 = new Bola( [anim, anim2] , 50, 100, "button",1 );
-	b02 = new Bola( [anim, anim2], 100, 100, "button",1 );
-	b03 = new Bola( [anim, anim2], 150, 100, "button",1 );
-	b04 = new Bola( [anim, anim2], 200, 100, "button",1 );
-	b05 = new Bola( [anim, anim2], 250, 100, "button",1 );
-
-	
-	b01.setDependence(b02, null);
-	b02.setDependence(b03, b01);
-	b03.setDependence(b04, b02);
-	b04.setDependence(b05, b03);
-	b05.setDependence(null, b04);
-	
-	anim3 = new Animation( ["bola_azul"]);
-	anim4 = new Animation( ["bola_azul_on"]);
-	
-	b11 = new Bola([anim3, anim4], 50, 200, "button", 10 );
-	b12 = new Bola([anim3, anim4], 100, 200, "button", 10 );
-	b13 = new Bola([anim3, anim4], 150, 200, "button", 10 );
-	b14 = new Bola([anim3, anim4], 200, 200, "button", 10 );
-	b15 = new Bola([anim3, anim4], 250, 200, "button", 10 );
-	
-	
-	b11.setDependence(b12, null);
-	b12.setDependence(b13, b11);
-	b13.setDependence(b14, b12);
-	b14.setDependence(b15, b13);
-	b15.setDependence(null, b14);
-	
-	anim5 = new Animation( ["bola_laranja"]);
-	anim6 = new Animation( ["bola_laranja_on"]);
-	
-	
-	b21 = new Bola([anim5, anim6], 50, 300, "button", 100 );
-	b22 = new Bola([anim5, anim6], 100, 300, "button", 100 );
-	b23 = new Bola([anim5, anim6], 150, 300, "button", 100 );
-	b24 = new Bola([anim5, anim6], 200, 300, "button", 100 );
-	b25 = new Bola([anim5, anim6], 250, 300, "button", 100 );
-	
-	b21.setDependence(b22, null);
-	b22.setDependence(b23, b21);
-	b23.setDependence(b24, b22);
-	b24.setDependence(b25, b23);
-	b25.setDependence(null, b24);
-	
-	anim7 = new Animation( ["bola_vermelha"]);
-	anim8 = new Animation( ["bola_vermelha_on"]);
-	
-	
-	b31 = new Bola([anim7, anim8], 50, 400, "button", 1000 );
-	b32 = new Bola([anim7, anim8], 100, 400, "button", 1000 );
-	b33 = new Bola([anim7, anim8], 150, 400, "button", 1000 );
-	b34 = new Bola([anim7, anim8], 200, 400, "button", 1000 );
-	b35 = new Bola([anim7, anim8], 250, 400, "button", 1000 );
-	
-	b31.setDependence(b32, null);
-	b32.setDependence(b33, b31);
-	b33.setDependence(b34, b32);
-	b34.setDependence(b35, b33);
-	b35.setDependence(null, b34);
-	
-	//arrayB = [b01, b02, b03, b04, b05,b11, b12, b13, b14, b15,b21, b22, b23, b24, b25,b31, b32, b33, b34, b35];
-	 
-	valor = 0;
-	
-	txt = new Text("VALOR: ?", 30, 570, "white", 25)
-
-	txt.update = function(){
-	
-		this.setText("VALOR: " + valor);
-	}
-	*/
-}
-
 function setDerrota(){
+	esconderTimer();
+	
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
@@ -885,6 +804,8 @@ function setDerrota(){
 }
 
 function setVitoria(){
+	esconderTimer();
+
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
 
@@ -984,14 +905,55 @@ function verificacao(objeto) {
 }
 
 function iniciarContagemVitoria() {
-  gameTimer = setInterval(() => {
+	const timerContainer = document.getElementById("timerContainer");
+	timerContainer.style.display = "block"; // Mostra o timer
+
+	gameTimer = setInterval(() => {
     totalTime--;
+
+	// Formata o tempo em mm:ss
+    const minutos = Math.floor(totalTime / 60);
+    const segundos = totalTime % 60;
+    timerContainer.textContent = `${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
 
     // Se o tempo acabou → vitória
     if (totalTime <= 0) {
       clearInterval(gameTimer);
       jogoAtivo = false;
+	  timerContainer.style.display = "none";
       setVitoria();
     }
   }, 1000);
+}
+
+function esconderTimer() {
+  const timerContainer = document.getElementById("timerContainer");
+  if (timerContainer) timerContainer.style.display = "none";
+}
+
+// Exibe o nome do objeto quando o mouse passa por cima
+function ativarHoverNomes() {
+  const scenes = [1,2,3,4,5,6,7,8]; // Suas cenas com objetos
+  const label = document.getElementById("objetoNome");
+
+  scenes.forEach(sceneNum => {
+    const scene = se.mlevel.getScene(sceneNum);
+    const objects = scene.getObjects();
+
+    objects
+      .filter(obj => obj.classename === "map")
+      .forEach(obj => {
+        obj.setHover(
+          // Quando o mouse entra
+          function() {
+            label.textContent = obj.name;
+            label.style.display = "block";
+          },
+          // Quando o mouse sai
+          function() {
+            label.style.display = "none";
+          }
+        );
+      });
+  });
 }
