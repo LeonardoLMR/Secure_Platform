@@ -236,7 +236,7 @@ function startTiming(){
 	}
 
 	// Tempo para um bug surgir novamente
-	setTimeout(startTiming, 1*1000);
+	setTimeout(startTiming, 30*1000);
 }
 
 // ---- ESTRUTURA PRINCIPAL DA CASA ---------------------------------------------------------------
