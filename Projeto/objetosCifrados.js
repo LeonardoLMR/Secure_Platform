@@ -227,7 +227,7 @@ window.objetosCifrados = {
     "9": "YXUCAXWJ",
     "10": "ZYVDBYXK"
   },
-  "vaso_planta": {
+  "vaso de planta": {
     "1": "WBTP EF QMBOUB",
     "2": "XCUQ FG RNCPVC",
     "3": "YDVR GH SODQWD",
@@ -287,7 +287,7 @@ window.objetosCifrados = {
     "9": "LQDENRAX",
     "10": "MREFOSBY"
   },
-  "mesa_lateral": {
+  "mesa lateral": {
     "1": "NFTB MBUFSBM",
     "2": "OGUC NCVGTCN",
     "3": "PHVD ODWHUDO",

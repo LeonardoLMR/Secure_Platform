@@ -135,9 +135,12 @@ se.gameReady = function() {
 	this.mlevel.addScene(derrota); //09
 	this.mlevel.addScene(vitoria); //10
 	this.mlevel.addScene(menu2); //11
+
+	ativarHoverNomesComMouse(); // ativa o hover
 }
 
-//Objetos do Menu
+// ---- MENUS ---------------------------------------------------------------
+
 function setMenu(){
 	var bg = new GameObject("background", 0, 0, "gui", 1600, 900);
 	bg.setPosition(canvas.width/2 - bg.w/2, 5);
@@ -172,7 +175,6 @@ function setMenu2(){
 
 		jogoAtivo = true;
 		bugCount = 0;
-		ativarHoverNomes();
 		
 		console.log("🕒 Você tem 30 segundos para observar a casa 🕒");
 
@@ -187,7 +189,8 @@ function setMenu2(){
 	aviso.setPosition( canvas.width/2 - aviso.w/2 - 10, 155);
 }
 
-//Temporizador
+// ---- TEMPORIZADOR ---------------------------------------------------------------
+
 function startTiming(){
 	if (!jogoAtivo) return; // Evita rodar caso o jogo tenha terminado
 
@@ -233,11 +236,12 @@ function startTiming(){
 	}
 
 	// Tempo para um bug surgir novamente
-	setTimeout(startTiming, 30*1000);
+	setTimeout(startTiming, 1*1000);
 }
 
+// ---- ESTRUTURA PRINCIPAL DA CASA ---------------------------------------------------------------
+
 entradaIsLoaded = false;
-//Objetos da entrada e suas posições
 function setEntrada(){
 	//Tem que ter isso para todos os levels
 	if( entradaIsLoaded ){
@@ -793,6 +797,8 @@ function setGaragem(){
 	portaG.setPosition(canvas.width/2 - portaG.w/2, 772);
 }
 
+// ---- VITÓRIA E DERROTA ---------------------------------------------------------------
+
 function setDerrota(){
 	esconderTimer();
 	
@@ -801,6 +807,8 @@ function setDerrota(){
 
 	var derrota = new GameObject("derrota", 0, 0, "gui", 801, 567);
 	derrota.setPosition( canvas.width/2 - derrota.w/2 - 23, 175);
+
+	jogoAtivo = false;
 }
 
 function setVitoria(){
@@ -811,7 +819,11 @@ function setVitoria(){
 
 	var vitoria = new GameObject("vitoria", 0, 0, "gui", 914, 582);
 	vitoria.setPosition( canvas.width/2 - vitoria.w/2 - 23, 165);
+
+	jogoAtivo = false;
 }
+
+// ---- FUNCIONALIDADES DO JOGO ---------------------------------------------------------------
 
 //Função para recuperar os moveis
 document.addEventListener("DOMContentLoaded", function() {
@@ -838,7 +850,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			// acerto — faz o objeto reaparecer
 			window.objetoAtual.setAlpha(1);
 
-			// 🔽 Diminui o contador de bugs
+			// Diminui o contador de bugs
 			bugCount--;
 			console.log(`🧹 Bug consertado! Restam ${bugCount}`);
 
@@ -861,21 +873,24 @@ document.addEventListener("DOMContentLoaded", function() {
 //Função para corrigir nomes
 function obterNomeBase(nomeObjeto) {
   nomeObjeto = nomeObjeto.replace(/\d+$/, ""); // remove número no final
+  nomeObjeto.replace(/_/g, " ");       // troca underline por espaço
 
   if (nomeObjeto.startsWith("armario")) return "armario";
   if (nomeObjeto.startsWith("balcao")) return "balcao";
   if (nomeObjeto.startsWith("cama")) return "cama";
-  if (nomeObjeto.startsWith("mesa_lateral")) return "mesa_lateral";
-  if (nomeObjeto.startsWith("mesa_principal")) return "mesa_principal";
+  if (nomeObjeto.startsWith("mesa_lateral")) return "mesa lateral";
+  if (nomeObjeto.startsWith("mesa_principal")) return "mesa";
   if (nomeObjeto.startsWith("tapete")) return "tapete";
   if (nomeObjeto.startsWith("janela")) return "janela";
   if (nomeObjeto.startsWith("pia")) return "pia";
-  if (nomeObjeto.startsWith("guarda_roupa")) return "guarda_roupa";
+  if (nomeObjeto.startsWith("guarda_roupa")) return "guarda roupa";
   if (nomeObjeto.startsWith("cadeira")) return "cadeira";
+  if (nomeObjeto.startsWith("vaso")) return "vaso de planta";
 
   return nomeObjeto;
 }
 
+// Função para verificar objeto
 function verificacao(objeto) {
 	//Se estiver bugado
     objeto.setClick(function() {
@@ -904,6 +919,7 @@ function verificacao(objeto) {
     });
 }
 
+// Função para iniciar aa contagem para a vitória
 function iniciarContagemVitoria() {
 	const timerContainer = document.getElementById("timerContainer");
 	timerContainer.style.display = "block"; // Mostra o timer
@@ -926,34 +942,37 @@ function iniciarContagemVitoria() {
   }, 1000);
 }
 
+// Função para esconder o timer
 function esconderTimer() {
   const timerContainer = document.getElementById("timerContainer");
   if (timerContainer) timerContainer.style.display = "none";
 }
 
-// Exibe o nome do objeto quando o mouse passa por cima
-function ativarHoverNomes() {
-  const scenes = [1,2,3,4,5,6,7,8]; // Suas cenas com objetos
-  const label = document.getElementById("objetoNome");
+// Função para ativar o Hover dos nomes
+function ativarHoverNomesComMouse() {
+  const label = document.getElementById("objetoNome"); // o div que mostra o nome
+  const mouse = se.mmouse; // gerenciador do mouse do StarterJS
 
-  scenes.forEach(sceneNum => {
-    const scene = se.mlevel.getScene(sceneNum);
-    const objects = scene.getObjects();
+  // Atualiza a cada 50ms
+  setInterval(() => {
+    const scene = se.mlevel.getCurrentScene();
+    if (!scene || !scene.getObjects) return;
 
-    objects
-      .filter(obj => obj.classename === "map")
-      .forEach(obj => {
-        obj.setHover(
-          // Quando o mouse entra
-          function() {
-            label.textContent = obj.name;
-            label.style.display = "block";
-          },
-          // Quando o mouse sai
-          function() {
-            label.style.display = "none";
-          }
-        );
-      });
-  });
+    const objects = scene.getObjects().filter(o => o.classename === "map");
+    const mx = mouse.getMouseX();
+    const my = mouse.getMouseY();
+
+    let hovering = false;
+
+    for (const obj of objects) {
+      if (obj.getAlpha() !== 0 && mx > obj.x && mx < obj.x + obj.w && my > obj.y && my < obj.y + obj.h) {
+        label.textContent = obterNomeBase(obj.name); // usa a função para limpar o nome
+        label.style.display = "block";
+        hovering = true;
+        break; // para de checar os outros objetos
+      }
+    }
+
+    if (!hovering) label.style.display = "none";
+  }, 50);
 }
