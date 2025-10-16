@@ -35,7 +35,7 @@ window.objetosCifrados = {
     "9": "LJMNRAJ",
     "10": "MKNOSBK"
   },
-  "guarda_roupa": {
+  "guarda roupa": {
     "1": "HVBSEB-SPVQB",
     "2": "IWCTFC-TQWRC",
     "3": "JXDUGD-URXSD",
@@ -59,7 +59,7 @@ window.objetosCifrados = {
     "9": "OXPJX",
     "10": "PYQKY"
   },
-  "mesa_principal": {
+  "mesa": {
     "1": "NFTB",
     "2": "OGUC",
     "3": "PHVD",

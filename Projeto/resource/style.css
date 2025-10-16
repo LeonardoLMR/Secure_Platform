@@ -36,22 +36,76 @@ canvas{
     z-index: 9999;
 }
 
-#modal{
-    background-color: rgb(0, 94, 194);
-    height: 300px;
-    width: 500px;
-    border: solid 4px;
-    border-radius: 10px;
-    border-color: aliceblue;
-    position: absolute;
-    z-index: 999;
-    top: 20px;
-    left: calc(50%);
-    display: none;
-    font-size: 40px;
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: aliceblue;
+#modal {
+  background: linear-gradient(135deg, #0066cc, #004c99);
+  width: 480px;
+  height: 260px;
+  border: 3px solid #cce6ff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  text-align: center;
+  color: #f0f8ff;
+  font-family: 'Courier New', monospace;
+  padding: 20px;
+}
+
+#modal span {
+  display: block;
+  margin: 5px 0;
+}
+
+#palavra {
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+#modal span b {
+  font-size: 34px;
+  color: #e6f3ff;
+  letter-spacing: 2px;
+  font-family: monospace;
+}
+
+#modal input {
+  width: 70%;
+  height: 35px;
+  border-radius: 8px;
+  border: 2px solid #cce6ff;
+  padding: 5px 10px;
+  font-size: 18px;
+  font-family: monospace;
+  outline: none;
+  transition: 0.3s;
+}
+
+#modal input:focus {
+  border-color: #66b3ff;
+  box-shadow: 0 0 8px #66b3ff;
+}
+
+#modal button {
+  background: linear-gradient(135deg, #0066cc, #004c99);
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 10px;
+  border: 3px solid #cce6ff;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#modal button:hover {
+  background-color: #007acc;
+  transform: scale(1.05);
 }
 
 #objetoNome {
@@ -61,7 +115,7 @@ canvas{
     padding: 8px 12px;
     background: rgba(0, 0, 0, 0.7);
     color: #fff;
-    font-size: 18px;
+    font-size: 30px;
     border-radius: 6px;
     display: none;
     pointer-events: none;
